@@ -1,0 +1,23 @@
+<div class="main">
+    <h1>Biden</h1>
+    
+    <div class="p-fluid second">
+        <div class="p-field">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                <input type="text" pInputText [(ngModel)]="email" placeholder="Користувач">
+            </div>
+        </div>
+        <div class="p-field">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
+                <input type="password" pPassword placeholder="Пароль" [feedback]="false"/>
+            </div>
+        </div>
+        <div class="p-field">
+            <p-button label="Авторизуватись" icon="pi pi-check" iconPos="left" (click)="submit()"></p-button>
+        </div>
+    </div>
+    <br><br>
+    <span>Розроблено Відділом аналітичних систем НБУ</span>
+</div>

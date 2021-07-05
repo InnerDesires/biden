@@ -1,0 +1,59 @@
+<app-login *ngIf="!hideLogin" (submited)="onSubmit($event)"></app-login>
+<div class="tablesList">
+    <app-tables-list *ngIf="showList" (selected)="onSelected($event)"></app-tables-list>
+</div>
+<p-table *ngIf="products" [columns]="cols" [value]="products" #dt1 [resizableColumns]="true" [autoLayout]="true"
+    (onEditInit)="onEditInit($event)" (onEditComplete)="onEditComplete($event)" (onEditCancel)="onEditCancel($event)"
+    [paginator]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+    [globalFilterFields]="cols">
+    <ng-template pTemplate="caption">
+
+        <div class="p-d-flex table-header">
+            <span>{{tableName}}</span>
+            <span class="p-input-icon-left p-ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                    placeholder="Пошук" />
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns" pResizableColumn>
+                {{col.header}}
+            </th>
+            <th></th>
+        </tr>
+        <tr>
+            <th *ngFor="let col of columns">
+                <input pInputText autoResize="autoResize" type="text"
+                    (input)="dt1.filter($event.target.value, col.field, 'contains')" [value]="dt1.filters[col]?.value"
+                    placeholder="Пошук за {{col.field}}" class="p-column-filter">
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-i="rowIndex" let-columns="columns">
+        <tr>
+            <td pEditableColumn *ngFor="let col of columns;" [pEditableColumn]="rowData"
+                [pEditableColumnField]="col.field" [pEditableColumnRowIndex]="i">
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="rowData[col.field]">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{rowData[col.field]}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                    (click)="deleteProduct(rowData)"></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

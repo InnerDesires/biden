@@ -1,0 +1,6 @@
+<h2>Для початку роботи оберіть довідник</h2>
+<p-listbox [options]="tables" [filter]="true"  >
+  <ng-template let-table  pTemplate="item" >
+      <div (click)="onSelect(table)">{{table.txt}}</div>
+  </ng-template>
+</p-listbox>
